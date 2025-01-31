@@ -15,7 +15,8 @@
     <script>
         function encodeText() {
             const inputText = document.getElementById('inputText').value;
-            const encodedText = btoa(inputText); // Base64エンコード
+            const utf8Text = unescape(encodeURIComponent(inputText)); // UTF-8に変換
+            const encodedText = btoa(utf8Text); // Base64エンコード
             document.getElementById('outputText').value = encodedText;
         }
     </script>
