@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64エンコード</title>
+</head>
+<body>
+    <h1>テキストをBase64エンコード</h1>
+    <textarea id="inputText" rows="4" cols="50"></textarea><br>
+    <button onclick="encodeText()">エンコード</button>
+    <h2>Base64エンコード結果</h2>
+    <textarea id="outputText" rows="4" cols="50" readonly></textarea>
+
+    <script>
+        function encodeText() {
+            const inputText = document.getElementById('inputText').value;
+            const encodedText = btoa(inputText); // Base64エンコード
+            document.getElementById('outputText').value = encodedText;
+        }
+    </script>
+</body>
+</html>
