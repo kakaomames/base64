@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XORエンコードリクエスト</title>
+</head>
+<body>
+    <h1>XORエンコードされたURLリクエスト</h1>
+    <label for="urlInput">URLを入力してください:</label>
+    <input type="text" id="urlInput" placeholder="例: https://example.com">
+    <button onclick="sendRequest()">送信</button>
+
+    <div id="response"></div>
+
+    <script>
+        const xorKey = [0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02];
+
+        // XORエンコード関数
+        function xorEncode(input) {
+            let encoded = '';
+            for (let i = 0; i < input.length; i++) {
+                encoded += String.fromCharCode(input.charCodeAt(i) ^ xorKey[i % xorKey.length]);
+            }
+            return encoded;
+        }
+
+        // リクエストを送る関数
+        function sendRequest() {
+            const urlInput = document.getElementById('urlInput').value;
+            if (urlInput) {
+                const encodedUrl = xorEncode(urlInput);
+                const requestUrl = `https://home-teal-zeta.vercel.app/a/${encodeURIComponent(encodedUrl)}`;
+                
+                fetch(requestUrl)
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('response').innerHTML = html;
+                    })
+                    .catch(error => {
+                        document.getElementById('response').innerHTML = 'エラーが発生しました: ' + error;
+                    });
+            } else {
+                alert("URLを入力してください");
+            }
+        }
+    </script>
+</body>
+</html>
